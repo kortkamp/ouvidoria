@@ -12,6 +12,8 @@ export const GlobalStyle = createGlobalStyle`
     
     --background: #F0F2F5;
     --shape: #ffffff;
+
+    --page-width:55rem;
     
   }
   * {
@@ -30,7 +32,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     background: var(--background);
     -webkit-font-smoothing: antialiased;
-    max-width: 52.5rem;
+    //max-width: 52.5rem;
     width: 100%;
 
     margin: 0 auto;
