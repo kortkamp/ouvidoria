@@ -30,6 +30,10 @@ export const GlobalStyle = createGlobalStyle`
   body {
     background: var(--background);
     -webkit-font-smoothing: antialiased;
+    max-width: 52.5rem;
+    width: 100%;
+
+    margin: 0 auto;
   }
   body, input, textarea, button {
     font-family: 'Poppins', sans-serif;
