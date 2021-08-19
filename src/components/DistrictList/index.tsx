@@ -20,7 +20,7 @@ const DistrictList = (): JSX.Element => {
   return(
     <Container>
       <div>
-        <h2>Escolha um distrito para iniciar uma reclamação</h2>
+        <h2>Escolha um bairro para iniciar uma reclamação</h2>
       </div>
       <ul>
         {districts.map((district) => (
