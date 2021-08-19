@@ -1,7 +1,9 @@
 import React, { FormEvent, useState } from 'react';
+import { useEffect } from 'react';
 import Modal from 'react-modal';
 
 import closeImg from '../../assets/close.svg';
+import { useAuth } from '../../hooks/useAuth';
 
 
 import { Container } from './styles';
@@ -11,16 +13,36 @@ interface ILoginModalProps {
   onRequestClose:() => void;
 }
 
+interface IAuthReturn {
+  status: number;
+  message: string;
+}
+
 export function LoginModal({ isOpen, onRequestClose }: ILoginModalProps) {
 
+  const {authenticate} = useAuth();
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
+  const [error, setError] = useState<IAuthReturn>();
+
+  useEffect(()=>{
+    setError({
+      status:0,
+      message:''
+    })
+  },[email,password]);
 
   async function handleLogin(event:FormEvent) {
     event.preventDefault();
 
+    const authReturn = await authenticate({email,password});
 
-    onRequestClose();
+    if(authReturn.status === 200){
+      onRequestClose();
+    }else{
+      setError(authReturn)
+    }
+
   }
 
   return (
@@ -54,7 +76,10 @@ export function LoginModal({ isOpen, onRequestClose }: ILoginModalProps) {
 
         
 
-        <button type="submit">Cadastrar</button>
+        <button type="submit">Fazer Login</button>
+
+        <label htmlFor="">{error?.message}</label>
+
       </Container>
     </Modal>
 

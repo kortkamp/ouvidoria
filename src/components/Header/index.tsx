@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Container, TitleArea, UserArea } from './styles';
 
 import megaphoneImg from '../../assets/megaphone.svg'
+import { useAuth } from '../../hooks/useAuth';
 
-interface IUser {
-  name: string;
-  admin:boolean;
-  token:string;
-}
 
 interface IHeaderProps {
   onLogin: () => void;
@@ -15,14 +11,7 @@ interface IHeaderProps {
 
 const Header = ({ onLogin }:IHeaderProps): JSX.Element => {
 
-  const [user,setUser] = useState<IUser>(() => {
-    const storagedUser = localStorage.getItem('@ouvidoria:user');
-
-    if (storagedUser) {
-      return JSON.parse(storagedUser);
-    }
-    return {};
-  });
+  const { user } = useAuth();
 
   useEffect(() => {
     //get user from localstorage
@@ -37,7 +26,7 @@ const Header = ({ onLogin }:IHeaderProps): JSX.Element => {
         </TitleArea>
         <UserArea>
           <button type='button' onClick={onLogin}>
-            <span>{user.name || 'fazer login'}</span>
+            <span>{user?.name || 'fazer login'}</span>
           </button>
         </UserArea>
       </div>
