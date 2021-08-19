@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { lighten } from 'polished';
+
 export const Container = styled.header`
     height: 4rem;
     width:100%;
@@ -30,5 +32,12 @@ export const TitleArea = styled.div`
 `;
 
 export const UserArea = styled.div`
-  
+  button {
+    border:none;
+    background:transparent;
+
+    &:hover {
+      color: ${lighten(0.2, 'black')}
+    }
+  }
 `;
