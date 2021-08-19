@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, TitleArea, UserArea } from './styles';
 
 import megaphoneImg from '../../assets/megaphone.svg'
 
-const Header = (): JSX.Element => {
+interface IUser {
+  name: string;
+  admin:boolean;
+  token:string;
+}
+
+interface IHeaderProps {
+  onLogin: () => void;
+}
+
+const Header = ({ onLogin }:IHeaderProps): JSX.Element => {
+
+  const [user,setUser] = useState<IUser>(() => {
+    const storagedUser = localStorage.getItem('@ouvidoria:user');
+
+    if (storagedUser) {
+      return JSON.parse(storagedUser);
+    }
+    return {};
+  });
+
+  useEffect(() => {
+    //get user from localstorage
+  }, []);
   
   return (
     <Container>
@@ -13,7 +36,9 @@ const Header = (): JSX.Element => {
           <span>Sistema de Ouvidoria</span>
         </TitleArea>
         <UserArea>
-          <p>não logado</p>
+          <button type='button' onClick={onLogin}>
+            <span>{user.name || 'fazer login'}</span>
+          </button>
         </UserArea>
       </div>
     </Container>
