@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
-import { Container, TitleArea, UserArea } from './styles';
+import React from 'react';
+import { Container, TitleArea } from './styles';
 
 import megaphoneImg from '../../assets/megaphone.svg'
-import { useAuth } from '../../hooks/useAuth';
+
+import UserTooltip from '../UserTooltip';
 
 
 interface IHeaderProps {
@@ -11,11 +12,6 @@ interface IHeaderProps {
 
 const Header = ({ onLogin }:IHeaderProps): JSX.Element => {
 
-  const { user } = useAuth();
-
-  useEffect(() => {
-    //get user from localstorage
-  }, []);
   
   return (
     <Container>
@@ -24,11 +20,8 @@ const Header = ({ onLogin }:IHeaderProps): JSX.Element => {
           <img src={megaphoneImg} alt="Imagem de megafone" />
           <span>Sistema de Ouvidoria</span>
         </TitleArea>
-        <UserArea>
-          <button type='button' onClick={onLogin}>
-            <span>{user?.name || 'fazer login'}</span>
-          </button>
-        </UserArea>
+
+        <UserTooltip />
       </div>
     </Container>
   );
