@@ -3,9 +3,22 @@ import { Container } from './styles';
 
 import Tooltip from 'react-tooltip';
 
-const UserTooltip = (): JSX.Element => {
+interface IUserTooltipProps  {
+  openLoginModal: () => void;
+}
 
-  const { user } = useAuth();
+const UserTooltip = ({openLoginModal}:IUserTooltipProps ): JSX.Element => {
+
+  const { user, logout } = useAuth();
+
+  function handleLogin() {
+    Tooltip.hide();
+    openLoginModal();
+  }
+  function handleLogout(){
+    Tooltip.hide();
+    logout();
+  }
 
   return (
     <Container>
@@ -13,13 +26,24 @@ const UserTooltip = (): JSX.Element => {
             {user?.name || 'entrar'}
           </a>
 
-          <Tooltip id='userMenu' place='bottom' type="light" effect='solid' clickable={true}>
-            <button type='button' >
-              login
-            </button>
-            <button type='button' >
-              cadastrar
-            </button>
+          <Tooltip 
+            id='userMenu' 
+            globalEventOff='click' 
+            place='bottom' 
+            type="light" 
+            effect='solid' 
+            clickable={true}
+          >
+            { user? 
+              <>
+                <button type='button' >Perfil</button>
+                <button type='button' onClick={handleLogout}>Sair</button>
+              </>
+            : <>
+                <button type='button' onClick={handleLogin}>Login</button>
+                <button type='button' >Cadastrar</button>
+              </>
+            }
           </Tooltip>
           
     </Container>

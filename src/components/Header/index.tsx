@@ -7,10 +7,10 @@ import UserTooltip from '../UserTooltip';
 
 
 interface IHeaderProps {
-  onLogin: () => void;
+  openLoginModal: () => void;
 }
 
-const Header = ({ onLogin }:IHeaderProps): JSX.Element => {
+const Header = ({ openLoginModal }:IHeaderProps): JSX.Element => {
 
   
   return (
@@ -21,7 +21,7 @@ const Header = ({ onLogin }:IHeaderProps): JSX.Element => {
           <span>Sistema de Ouvidoria</span>
         </TitleArea>
 
-        <UserTooltip />
+        <UserTooltip openLoginModal={openLoginModal}/>
       </div>
     </Container>
   );
