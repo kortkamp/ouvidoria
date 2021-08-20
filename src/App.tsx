@@ -24,7 +24,7 @@ function App() {
     <AuthProvider>
       <div className="App">
         <BrowserRouter>
-          <Header onLogin={handleOpenLoginModal}/>
+          <Header openLoginModal={handleOpenLoginModal}/>
           <LoginModal
           isOpen={isLoginModalOpen}
           onRequestClose={handleCloseLoginModal}
