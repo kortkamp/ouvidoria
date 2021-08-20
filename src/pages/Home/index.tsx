@@ -1,14 +1,17 @@
 import DistrictList from "../../components/DistrictList";
+import Header from "../../components/Header";
 import { Container } from "./styles";
 
 const Home = (): JSX.Element => {
 
   
   return(
-    <Container>
-      
-      <DistrictList />
-    </Container>
+    <>
+      <Header />
+      <Container>
+        <DistrictList />
+      </Container>
+    </>
   )
 }
 
