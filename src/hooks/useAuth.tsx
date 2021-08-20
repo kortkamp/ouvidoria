@@ -21,6 +21,7 @@ interface IAuthContextData {
   user: IUser|undefined;
 
   authenticate: (login: ILoginData) => Promise<IAuthReturn>;
+  logout: () => void;
 }
 
 interface IAuthReturn {
@@ -60,8 +61,12 @@ export function AuthProvider({ children }:IAuthProviderProps) {
     } 
   }
 
+  async function logout(){
+    setUser({} as IUser);
+  }
+
   return (
-    <AuthContext.Provider value={{ user, authenticate }}>
+    <AuthContext.Provider value={{ user, authenticate, logout }}>
       {children}
     </AuthContext.Provider>
   );
