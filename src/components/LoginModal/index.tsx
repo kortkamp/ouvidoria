@@ -74,11 +74,11 @@ export function LoginModal({ isOpen, onRequestClose }: ILoginModalProps) {
           onChange={(event) => setPassword(event.target.value)}
         />
 
-        
-
         <button type="submit">Fazer Login</button>
 
-        <label htmlFor="">{error?.message}</label>
+        <div>
+          <span>{error?.message}</span>
+        </div>
 
       </Container>
     </Modal>
