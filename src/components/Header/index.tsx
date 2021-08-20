@@ -10,7 +10,7 @@ interface IHeaderProps {
   openLoginModal: () => void;
 }
 
-const Header = ({ openLoginModal }:IHeaderProps): JSX.Element => {
+const Header = (): JSX.Element => {
 
   
   return (
@@ -21,7 +21,7 @@ const Header = ({ openLoginModal }:IHeaderProps): JSX.Element => {
           <span>Sistema de Ouvidoria</span>
         </TitleArea>
 
-        <UserTooltip openLoginModal={openLoginModal}/>
+        <UserTooltip />
       </div>
     </Container>
   );

@@ -1,7 +1,12 @@
 import {
   createContext, useEffect, useState, ReactNode, useContext,
 } from 'react';
+import { decode } from 'jsonwebtoken'
 import { api } from '../services/api';
+import { useHistory } from 'react-router-dom'
+
+import { LoginModal } from '../components/LoginModal'
+
 
 interface IUser {
   name: string;
@@ -22,6 +27,7 @@ interface IAuthContextData {
 
   authenticate: (login: ILoginData) => Promise<IAuthReturn>;
   logout: () => void;
+  handleOpenLoginModal: () => void;
 }
 
 interface IAuthReturn {
@@ -34,13 +40,33 @@ export const AuthContext = createContext<IAuthContextData>(
 );
 
 export function AuthProvider({ children }:IAuthProviderProps) {
+  const history = useHistory();
   const [user, setUser] = useState<IUser>();
+
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  function handleOpenLoginModal() {
+    setIsLoginModalOpen(true);
+  }
+
+  function handleCloseLoginModal() {
+    setIsLoginModalOpen(false);
+  }
 
   // load from storage----
   useEffect(() => {
     const storagedUser = localStorage.getItem('@ouvidoria:user');
 
+    
+
+    
     if (storagedUser) {
+      try{
+        const decodedUser = decode(JSON.parse(storagedUser).token)
+        console.log(decodedUser)
+      }catch(err){
+
+      }
       setUser(JSON.parse(storagedUser));
     }
 
@@ -51,6 +77,7 @@ export function AuthProvider({ children }:IAuthProviderProps) {
       const response = await api.post('/login', { ...loginInput });
       const userData = response.data;
       setUser(userData);
+      localStorage.setItem('@ouvidoria:user', JSON.stringify(userData))
       return { status:response.status, message: ''};
 
     }catch(err){
@@ -63,10 +90,16 @@ export function AuthProvider({ children }:IAuthProviderProps) {
 
   async function logout(){
     setUser({} as IUser);
+    localStorage.removeItem('@ouvidoria:user');
+    history.push('/')
   }
 
   return (
-    <AuthContext.Provider value={{ user, authenticate, logout }}>
+    <AuthContext.Provider value={{ user, authenticate, logout, handleOpenLoginModal }}>
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onRequestClose={handleCloseLoginModal}
+      />
       {children}
     </AuthContext.Provider>
   );

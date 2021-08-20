@@ -7,13 +7,13 @@ interface IUserTooltipProps  {
   openLoginModal: () => void;
 }
 
-const UserTooltip = ({openLoginModal}:IUserTooltipProps ): JSX.Element => {
+const UserTooltip = (): JSX.Element => {
 
-  const { user, logout } = useAuth();
+  const { user, logout,handleOpenLoginModal } = useAuth();
 
   function handleLogin() {
     Tooltip.hide();
-    openLoginModal();
+    handleOpenLoginModal();
   }
   function handleLogout(){
     Tooltip.hide();
