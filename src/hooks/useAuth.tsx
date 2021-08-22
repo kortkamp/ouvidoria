@@ -41,7 +41,7 @@ export const AuthContext = createContext<IAuthContextData>(
 
 export function AuthProvider({ children }:IAuthProviderProps) {
   const history = useHistory();
-  const [user, setUser] = useState<IUser>();
+  const [user, setUser] = useState<IUser|undefined>();
 
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
@@ -64,10 +64,10 @@ export function AuthProvider({ children }:IAuthProviderProps) {
       try{
         const decodedUser = decode(JSON.parse(storagedUser).token)
         console.log(decodedUser)
+        setUser(JSON.parse(storagedUser));
       }catch(err){
 
       }
-      setUser(JSON.parse(storagedUser));
     }
 
   }, []);
@@ -89,9 +89,10 @@ export function AuthProvider({ children }:IAuthProviderProps) {
   }
 
   async function logout(){
-    setUser({} as IUser);
+    setUser(undefined);
     localStorage.removeItem('@ouvidoria:user');
-    history.push('/')
+    
+    history.push('/');
   }
 
   return (

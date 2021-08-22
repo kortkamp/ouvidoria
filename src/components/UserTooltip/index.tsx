@@ -12,23 +12,30 @@ const UserTooltip = (): JSX.Element => {
   const { user, logout,handleOpenLoginModal } = useAuth();
 
   function handleLogin() {
-    Tooltip.hide();
+    
     handleOpenLoginModal();
+    hideTooltip();
   }
   function handleLogout(){
-    Tooltip.hide();
+    
+    hideTooltip();
     logout();
+  }
+  function hideTooltip(){
+    Tooltip.hide();
+    const tip = document.getElementById('userMenuTooltip');
+    tip?.classList.remove('show');
   }
 
   return (
     <Container>
-          <a data-tip data-for='userMenu' data-event='click'> 
+          <a data-tip data-for='userMenuTooltip' data-event='click' > 
             {user?.name || 'entrar'}
           </a>
 
           <Tooltip 
-            id='userMenu' 
-            globalEventOff='click' 
+            id='userMenuTooltip' 
+            globalEventOff='click'
             place='bottom' 
             type="light" 
             effect='solid' 
@@ -37,6 +44,7 @@ const UserTooltip = (): JSX.Element => {
             { user? 
               <>
                 <button type='button' >Perfil</button>
+                <button type='button' onClick={()=>{Tooltip.hide();hideTooltip()}}>Minhas reclamações</button>
                 <button type='button' onClick={handleLogout}>Sair</button>
               </>
             : <>

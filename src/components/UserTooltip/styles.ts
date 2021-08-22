@@ -4,8 +4,6 @@ import { lighten } from 'polished';
 
 export const Container = styled.div`
 
-  
-
   a {
     color: black;
     cursor: pointer;
@@ -14,11 +12,12 @@ export const Container = styled.div`
     }
   }
 
-  #userMenu {
+  #userMenuTooltip {
     display:flex;
     flex-direction:column;
+    padding:0.5rem 0;
 
-    width:10rem;
+    width:12rem;
     
     opacity:1;
 
@@ -27,15 +26,23 @@ export const Container = styled.div`
 
   button {
 
-    border:none;
+    border:0;
     background:transparent;
     text-align:left;
-
+    padding:0.2rem 1rem;;
+    width:100%
     & + button {
-      margin-top:0.5rem;
+      
     }
     &:hover {
-      color: ${lighten(0.2, 'black')}
+      background:#2188ff;
+      color:white;
     }
+  }
+
+  .tooltipHidden {
+    background:red;
+    display:none;
+    visibility:hidden;
   }
 `;
