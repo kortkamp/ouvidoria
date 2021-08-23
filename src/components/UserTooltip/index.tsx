@@ -3,10 +3,6 @@ import { Container } from './styles';
 
 import Tooltip from 'react-tooltip';
 
-interface IUserTooltipProps  {
-  openLoginModal: () => void;
-}
-
 const UserTooltip = (): JSX.Element => {
 
   const { user, logout,handleOpenLoginModal } = useAuth();
@@ -29,7 +25,7 @@ const UserTooltip = (): JSX.Element => {
 
   return (
     <Container>
-          <a data-tip data-for='userMenuTooltip' data-event='click' > 
+          <a  href="/#" data-tip data-for='userMenuTooltip' data-event='click' > 
             {user?.name || 'entrar'}
           </a>
 
