@@ -5,11 +5,6 @@ import megaphoneImg from '../../assets/megaphone.svg'
 
 import UserTooltip from '../UserTooltip';
 
-
-interface IHeaderProps {
-  openLoginModal: () => void;
-}
-
 const Header = (): JSX.Element => {
 
   
