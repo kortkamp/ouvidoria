@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ComplaintsList from '../../components/ComplaintsList';
 import Header from '../../components/Header';
 import { api } from '../../services/api';
 import { Container } from './styles';
@@ -57,12 +58,10 @@ const District = (): JSX.Element => {
     <>
       <Header />
       <Container>
-        <p>{district?.name}</p>
-        <ul>
-          {complaints.map((complaint)=>(
-            <li key={complaint.id} >{complaint.message}</li>
-          ))}  
-        </ul>
+        <div className='districtHeader'>
+          <h3>Bairro {district?.name}</h3>
+        </div>
+        <ComplaintsList complaints={complaints}/>
       </Container>
     </>
   )
