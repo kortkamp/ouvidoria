@@ -2,10 +2,6 @@ import styled from 'styled-components';
 
 
 export const Container = styled.ul`
-   
-  
-  
-  
   li {
     list-style-type: none;
     padding: 1rem 2rem;
@@ -38,6 +34,4 @@ export const Container = styled.ul`
       margin-top:1rem;
     }
   }
-  
-  
 `;
