@@ -34,14 +34,18 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
 
   const [complaints, setComplaints] = useState<IComplaint[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const paginationLimit = 3;
 
   useEffect(()=>{
-    api.get(`/complaints/district/${districtId}`)
+    api.get(`/complaints/district/${districtId}?page=${pageNumber}&limit=${paginationLimit}`)
       .then((response) => {
         const loadedComplaints = (response.data.complaints);
-        
+        const total = Math.ceil(response.data.total / paginationLimit);
+        setTotalPages(total);
         setComplaints(loadedComplaints)});
-  },[districtId]);
+  },[districtId,pageNumber]);
   
   return(
     <>
@@ -68,7 +72,7 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
           })}  
       </Container>
 
-      <PaginationCursor currentPage={pageNumber} totalPages= {5} setPage={setPageNumber}/>
+      <PaginationCursor currentPage={pageNumber} totalPages= {totalPages} setPage={setPageNumber}/>
     </>
   )
 }
