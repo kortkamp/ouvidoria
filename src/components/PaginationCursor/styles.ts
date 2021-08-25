@@ -31,5 +31,10 @@ export const Container = styled.div`
       cursor: pointer;
     }
   }
+
+  button {
+    font-size:2rem;
+    border:none;
+  }
   
 `;
