@@ -46,14 +46,21 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
         setTotalPages(total);
         setComplaints(loadedComplaints)});
   },[districtId,pageNumber]);
+
+  function handleComplaintClick(complaintId:string) {
+
+  }
   
   return(
     <>
       <Container>
         {complaints.map((complaint)=>{
-          const status = complaint.answers.length ? 'fechada' : 'aberta';
+          const status = complaint.answers.length ? 'resolvida' : 'pendente';
           return(
-            <li key={complaint.id} >
+            <li 
+              key={complaint.id}
+              onClick={()=>handleComplaintClick(complaint.id)}
+            >
               <div className='complaintTitle'>
                 <span>{complaint.user.name}</span>
                 <span> em {
@@ -66,6 +73,7 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
               <p>
                 {complaint.message}
               </p>
+             
             
             </li>
           )

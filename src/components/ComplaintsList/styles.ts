@@ -10,6 +10,8 @@ export const Container = styled.ul`
     color: var(--text-body);
     border-radius: 0.25rem;
 
+    cursor: pointer;
+
     & + li {
       margin-top:2rem;
     }
@@ -22,10 +24,10 @@ export const Container = styled.ul`
         margin-right:1rem;
       }
 
-      .aberta {
+      .pendente {
         color:red;
       }
-      .fechada {
+      .resolvida {
         color:green;
       }
     }
