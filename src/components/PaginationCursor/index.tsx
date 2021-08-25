@@ -1,15 +1,43 @@
 import {Container} from './styles'
 
 interface IPaginationProps {
-  page:number;
-  total:number;
+  currentPage:number;
+  totalPages:number;
   setPage: (page:number)=> void;
 }
 
-const PaginationCursor = ({page,total,setPage}:IPaginationProps): JSX.Element => {
+const PaginationCursor = ({currentPage,totalPages,setPage}:IPaginationProps): JSX.Element => {
+
+  function handleIncrement() {
+    if(currentPage < totalPages){
+      const newPage = currentPage + 1;
+      setPage(newPage);
+    }
+  }
+
+  function handleDecrement() {
+    if(currentPage > 1){
+      const newPage = currentPage - 1;
+      setPage(newPage);
+    }
+  }
+  const pagesList = Array.from({length: totalPages}, (v, k) => k + 1);
   return(
     <Container>
-      1 2 3 4 5 6
+      <div>
+        <button onClick={handleDecrement}> {'<'} </button>
+          <ul>
+            {pagesList.map(page => (
+              <li 
+                key={page}
+                className={page === currentPage ? 'selected': ''}
+                onClick={page !== currentPage ? ()=>setPage(page) : ()=>{}}
+              >{page}</li>
+            ))}
+          </ul>
+        
+        <button onClick={handleIncrement}> {'>'} </button>
+      </div>
     </Container>
   )
 }

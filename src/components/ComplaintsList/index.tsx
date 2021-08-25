@@ -68,7 +68,7 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
           })}  
       </Container>
 
-      <PaginationCursor page={pageNumber} total= {5} setPage={setPageNumber}/>
+      <PaginationCursor currentPage={pageNumber} totalPages= {5} setPage={setPageNumber}/>
     </>
   )
 }
