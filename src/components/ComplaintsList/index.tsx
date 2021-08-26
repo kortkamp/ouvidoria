@@ -4,6 +4,8 @@ import PaginationCursor from '../PaginationCursor';
 import { api } from '../../services/api';
 import {Container} from './styles'
 
+import detailsImg from '../../assets/details.svg';
+
 interface IAnswer {
   id:string;
   message:string;
@@ -47,7 +49,7 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
         setComplaints(loadedComplaints)});
   },[districtId,pageNumber]);
 
-  function handleComplaintClick(complaintId:string) {
+  function handleOpenDetails(complaintId:string) {
 
   }
   
@@ -57,10 +59,7 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
         {complaints.map((complaint)=>{
           const status = complaint.answers.length ? 'resolvida' : 'pendente';
           return(
-            <li 
-              key={complaint.id}
-              onClick={()=>handleComplaintClick(complaint.id)}
-            >
+            <li key={complaint.id}>
               <div className='complaintTitle'>
                 <span>{complaint.user.name}</span>
                 <span> em {
@@ -74,6 +73,11 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
                 {complaint.message}
               </p>
              
+              <img 
+                src={detailsImg} 
+                alt="detalhes" 
+                onClick={ ()=>handleOpenDetails(complaint.id) }
+              />
             
             </li>
           )

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
-
 export const Container = styled.ul`
   li {
+
+    position:relative;
     list-style-type: none;
     padding: 1rem 2rem;
     border: 0;
@@ -10,7 +11,7 @@ export const Container = styled.ul`
     color: var(--text-body);
     border-radius: 0.25rem;
 
-    cursor: pointer;
+    
 
     & + li {
       margin-top:2rem;
@@ -34,6 +35,19 @@ export const Container = styled.ul`
 
     p {
       margin-top:1rem;
+    }
+
+
+    & > img {
+
+      position: absolute;
+      top:0;
+      right:1rem;
+
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 `;
