@@ -36,7 +36,7 @@ const District = (): JSX.Element => {
       <Header />
       <Container>
         <div className='districtHeader'>
-          <h3>Bairro {district?.name}</h3>
+          <h2>Bairro {district?.name}</h2>
         </div>
         <ComplaintsList districtId={districtId}/>
       </Container>
