@@ -58,15 +58,13 @@ export function AuthProvider({ children }:IAuthProviderProps) {
     const storagedUser = localStorage.getItem('@ouvidoria:user');
 
     
-
-    
     if (storagedUser) {
       try{
         const decodedUser = decode(JSON.parse(storagedUser).token)
         console.log(decodedUser)
         setUser(JSON.parse(storagedUser));
       }catch(err){
-
+        localStorage.removeItem('@ouvidoria:user');
       }
     }
 
