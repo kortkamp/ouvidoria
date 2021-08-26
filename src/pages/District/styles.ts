@@ -6,7 +6,7 @@ export const Container = styled.div`
 
   .districtHeader{
     padding: 2.4rem 0;
-    h3 {
+    h2 {
       text-align:center;
     }
   }

@@ -8,6 +8,9 @@ export const Container = styled.div`
     color: black;
     cursor: pointer;
     display:flex;
+    align-items:center;
+
+    font-size:1.2rem;
     
 
     & > img {
@@ -34,10 +37,10 @@ export const Container = styled.div`
     background:transparent;
     text-align:left;
     padding:0.2rem 1rem;;
-    width:100%
-    & + button {
-      
-    }
+    width:100%;
+
+    font-size:1rem;
+   
     &:hover {
       background:#2188ff;
       color:white;

@@ -9,20 +9,33 @@ export const Container = styled.ul`
     border: 0;
     background: var(--shape);
     color: var(--text-body);
-    border-radius: 0.25rem;
-
-    
+    border-radius: 0.25rem;    
 
     & + li {
       margin-top:2rem;
     }
 
-    .complaintTitle {
+    header {
       color:black;
-      font-size:0.8rem;
+      font-size:1rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      & > div {
+        display:flex;
+        span {
+          
+          display:flex;
+          align-items:center;
+          
+          margin-right:1rem;
+          gap: 0.3rem;
+          img {
+            
+            height: 0.8rem;
+          }
+        }
 
-      span {
-        margin-right:1rem;
       }
 
       .pendente {
@@ -35,6 +48,7 @@ export const Container = styled.ul`
 
     p {
       margin-top:1rem;
+      font-size:1.1rem;
     }
 
 
@@ -61,16 +75,28 @@ export const Container = styled.ul`
 
 export const Answer = styled.ul`
 
-  padding-top:1rem;
-  border-top: 1px solid grey;
-  .answerTitle {
-      color:black;
-      font-size:0.8rem;
+  li{
 
-      span {
-        margin-right:1rem;
-      }
+  
+  border: 1px solid rgb(120,120,120,0.5);
+  border-radius: 0.3rem;
+  background: #f8f9ff;
 
-      
+  header {
+    
+    margin-bottom:1rem;
+    color: rgb(75, 89, 99);
+    display:flex;
+    justify-content:space-between;
+    strong {
+      font-size:1.2rem;
     }
+    span {
+      font-size:0.9rem;
+    }
+  }
+  p {
+    
+  }
+  }
 `;

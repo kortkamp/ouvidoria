@@ -13,7 +13,7 @@ export const GlobalStyle = createGlobalStyle`
     --background: #F0F2F5;
     --shape: #ffffff;
 
-    --page-width:55rem;
+    --page-width:65rem;
     
   }
   * {
