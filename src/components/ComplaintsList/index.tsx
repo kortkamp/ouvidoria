@@ -6,6 +6,7 @@ import {Container , Answer} from './styles'
 
 import detailsImg from '../../assets/details.svg';
 import closeImg from '../../assets/close.svg'
+import calendarImg from '../../assets/calendar.svg'
 
 interface IAnswer {
   id:string;
@@ -62,15 +63,33 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
           const status = complaint.answers.length ? 'resolvida' : 'pendente';
           return(
             <li key={complaint.id}>
-              <div className='complaintTitle'>
-                <span>{complaint.user.name}</span>
-                <span> em {
-                  new Intl.DateTimeFormat('pt-BR').format(
-                  new Date(complaint.created_at),
-                )}
-                </span>
-                <span className={status}>{status}</span>
-              </div>
+              <header>
+                <div className='complaintData'>
+                  <span>{complaint.user.name}</span>
+                  <span> <img src={calendarImg} alt="calendário" /> {
+                    new Intl.DateTimeFormat('pt-BR').format(
+                    new Date(complaint.created_at),
+                  )}
+                  </span>
+                  <span><b>ID:</b> {complaint.id}</span>
+                  <span className={status}>{status}</span>
+                </div>
+                <div className='complaintTools'>
+                  {complaint.id === complaintSelected? 
+                    <img 
+                      src={closeImg} 
+                      alt="fechar" 
+                      onClick={ ()=>handleOpenDetails('') }
+                    />
+                  : 
+                    <img 
+                      src={detailsImg} 
+                      alt="detalhes" 
+                      onClick={ ()=>handleOpenDetails(complaint.id) }
+                    />
+                  }
+                </div>
+              </header>
               <p>
                 {complaint.message}
               </p>
@@ -83,36 +102,23 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
                 ''
               }
 
-              {complaint.id === complaintSelected && complaint.image? 
-                <img 
-                  src={closeImg} 
-                  alt="fechar" 
-                  onClick={ ()=>handleOpenDetails('') }
-                />
-                
-              : 
-                <img 
-                  src={detailsImg} 
-                  alt="detalhes" 
-                  onClick={ ()=>handleOpenDetails(complaint.id) }
-                />
-              }
-
-              
-
               {complaint.id === complaintSelected ? 
                 <Answer >
                   
                   {complaint.answers.map((answer)=>(
-                    <li>
-                      <div className='answerTitle'>
-                        <span>{answer.user.name}</span>
-                        <span> em {
-                          new Intl.DateTimeFormat('pt-BR').format(
-                            new Date(answer.created_at),
-                            )}
-                        </span>
-                      </div>
+                    <li key={answer.id}>
+                      
+                        <header>
+                          <strong>Resposta</strong> 
+                          <span> em {
+                            new Intl.DateTimeFormat('pt-BR').format(
+                              new Date(answer.created_at),
+                              )}
+                          </span>
+                        
+                        </header>
+                        
+                      
                       <p>
                         {answer.message}
                       </p>
