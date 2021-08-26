@@ -1,14 +1,18 @@
 import styled from 'styled-components'
 
-import { lighten } from 'polished';
+// import { lighten } from 'polished';
 
 export const Container = styled.div`
 
   a {
     color: black;
     cursor: pointer;
-    &:hover {
-      color: ${lighten(0.3, 'black')}
+    display:flex;
+    
+
+    & > img {
+      height:1rem;
+      margin-right: 0.2rem;
     }
   }
 

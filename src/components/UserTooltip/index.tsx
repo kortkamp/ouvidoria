@@ -1,7 +1,8 @@
 import { useAuth } from '../../hooks/useAuth';
-import { Container } from './styles';
-
 import Tooltip from 'react-tooltip';
+import userImg from '../../assets/user.svg'
+
+import { Container } from './styles';
 
 const UserTooltip = (): JSX.Element => {
 
@@ -25,8 +26,9 @@ const UserTooltip = (): JSX.Element => {
 
   return (
     <Container>
-          <a  href="/#" data-tip data-for='userMenuTooltip' data-event='click' > 
-            {user?.name || 'entrar'}
+          <a data-tip data-for='userMenuTooltip' data-event='click' >
+            <img src={userImg} alt="logo de usuário" />
+            <span>{user?.name || 'entrar'}</span>
           </a>
 
           <Tooltip 
