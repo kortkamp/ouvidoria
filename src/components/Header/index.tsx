@@ -6,7 +6,6 @@ import megaphoneImg from '../../assets/megaphone.svg'
 import UserTooltip from '../UserTooltip';
 
 const Header = (): JSX.Element => {
-
   
   return (
     <Container>
