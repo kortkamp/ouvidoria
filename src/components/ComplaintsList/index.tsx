@@ -2,9 +2,10 @@
 import { useEffect, useState } from 'react';
 import PaginationCursor from '../PaginationCursor';
 import { api } from '../../services/api';
-import {Container} from './styles'
+import {Container , Answer} from './styles'
 
 import detailsImg from '../../assets/details.svg';
+import closeImg from '../../assets/close.svg'
 
 interface IAnswer {
   id:string;
@@ -37,6 +38,7 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
   const [complaints, setComplaints] = useState<IComplaint[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [complaintSelected, setComplaintSelected] = useState<string|undefined>('');
 
   const paginationLimit = 3;
 
@@ -50,7 +52,7 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
   },[districtId,pageNumber]);
 
   function handleOpenDetails(complaintId:string) {
-
+    setComplaintSelected(complaintId);
   }
   
   return(
@@ -72,12 +74,59 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
               <p>
                 {complaint.message}
               </p>
-             
-              <img 
-                src={detailsImg} 
-                alt="detalhes" 
-                onClick={ ()=>handleOpenDetails(complaint.id) }
-              />
+              
+              {complaint.id === complaintSelected && complaint.image? 
+                <div className='imageArea'>
+                  <img src={complaint.image} alt="imagem da reclamação" />
+                </div>
+              : 
+                ''
+              }
+
+              {complaint.id === complaintSelected && complaint.image? 
+                <img 
+                  src={closeImg} 
+                  alt="fechar" 
+                  onClick={ ()=>handleOpenDetails('') }
+                />
+                
+              : 
+                <img 
+                  src={detailsImg} 
+                  alt="detalhes" 
+                  onClick={ ()=>handleOpenDetails(complaint.id) }
+                />
+              }
+
+              
+
+              {complaint.id === complaintSelected ? 
+                <Answer >
+                  
+                  {complaint.answers.map((answer)=>(
+                    <li>
+                      <div className='answerTitle'>
+                        <span>{answer.user.name}</span>
+                        <span> em {
+                          new Intl.DateTimeFormat('pt-BR').format(
+                            new Date(answer.created_at),
+                            )}
+                        </span>
+                      </div>
+                      <p>
+                        {answer.message}
+                      </p>
+                    </li>
+                  ))}
+
+                  {complaint.answers.length === 0 ?
+                    'Esta reclamação ainda não foi respondida'
+                    : ''
+                  }
+                </Answer> 
+              :
+                ''
+              }
             
             </li>
           )

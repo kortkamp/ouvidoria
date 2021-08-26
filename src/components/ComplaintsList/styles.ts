@@ -41,7 +41,7 @@ export const Container = styled.ul`
     & > img {
 
       position: absolute;
-      top:0;
+      top:0.5rem;
       right:1rem;
 
 
@@ -50,4 +50,27 @@ export const Container = styled.ul`
       }
     }
   }
+
+  .imageArea {
+    padding: 2rem 0;
+    img {
+      width:20rem;
+    }
+  }
+`;
+
+export const Answer = styled.ul`
+
+  padding-top:1rem;
+  border-top: 1px solid grey;
+  .answerTitle {
+      color:black;
+      font-size:0.8rem;
+
+      span {
+        margin-right:1rem;
+      }
+
+      
+    }
 `;
