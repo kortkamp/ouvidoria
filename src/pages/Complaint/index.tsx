@@ -26,14 +26,14 @@ const Complaint = (): JSX.Element => {
   async function handleSubmit(event:FormEvent) {
     event.preventDefault();
 
-    // api.defaults.headers.common = {'Authorization': `bearer ${user?.token}`}
-
-    api.post('/complaints', {
+    api.post('complaints', {
       district_id: districtId,
       message,
       image,
       headers: { Authorization: `bearer ${user?.token}` }
-    })
+    }).then((response)=>{
+      console.log(response.data)
+    });
 
   }
 
@@ -55,8 +55,8 @@ const Complaint = (): JSX.Element => {
           {districts.map((district)=>(
             <option key={district.id} value={district.id}>{district.name}</option>
           ))}
-          
         </select>
+
         <label htmlFor="message">Texto da reclamação:</label>
         <textarea 
           name="message" 
@@ -67,6 +67,7 @@ const Complaint = (): JSX.Element => {
           value={message}
           onChange={(event) => setMessage(event.target.value)}
         ></textarea>
+
         <input 
           type="text" 
           placeholder="[dev] link da imagem"
