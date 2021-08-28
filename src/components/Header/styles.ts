@@ -25,6 +25,7 @@ export const Container = styled.header`
 
 export const TitleArea = styled.div`
   
+  cursor: pointer;
   font-size:1.8rem; 
   img {
     width:4rem;
