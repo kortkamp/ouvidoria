@@ -5,9 +5,14 @@ export const Container = styled.div`
   max-width:var(--page-width);
 
   .districtHeader{
-    padding: 2.4rem 0;
+    padding: 3.4rem 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
     h2 {
       text-align:center;
     }
+
+    
   }
 `;

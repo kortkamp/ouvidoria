@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ComplaintButton from '../../components/ComplaintButton';
 import ComplaintsList from '../../components/ComplaintsList';
 import Header from '../../components/Header';
 import { api } from '../../services/api';
@@ -37,6 +38,7 @@ const District = (): JSX.Element => {
       <Container>
         <div className='districtHeader'>
           <h2>Bairro {district?.name}</h2>
+          <ComplaintButton />
         </div>
         <ComplaintsList districtId={districtId}/>
       </Container>
