@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth';
 import Tooltip from 'react-tooltip';
 import userImg from '../../assets/user.svg'
@@ -6,6 +7,7 @@ import { Container } from './styles';
 
 const UserTooltip = (): JSX.Element => {
 
+  const history = useHistory();
   const { user, logout,handleOpenLoginModal } = useAuth();
 
   function handleLogin() {
@@ -42,6 +44,7 @@ const UserTooltip = (): JSX.Element => {
             { user? 
               <>
                 <button type='button' >Perfil</button>
+                <button type='button' onClick={()=> history.push('/complaint')}>Iniciar Reclamação</button>
                 <button type='button' onClick={()=>{Tooltip.hide();hideTooltip()}}>Minhas reclamações</button>
                 <button type='button' onClick={handleLogout}>Sair</button>
               </>
