@@ -6,7 +6,7 @@ export const Container = styled.div`
   }
   ul {
     display: flex;
-    justify-content:space-evenly;
+    justify-content:space-around;
     flex-wrap:wrap;
   }
   li { 
@@ -14,9 +14,9 @@ export const Container = styled.div`
     border: 1px solid gray;
     border-radius: 0.5rem;
     padding: 1rem;
-    margin-bottom:1rem;
+    margin:1rem;
 
-    width: 20rem;
+    width: 25rem;
 
     background:var(--blue);
     color:white;
