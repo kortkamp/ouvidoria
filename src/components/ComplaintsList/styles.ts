@@ -3,13 +3,24 @@ import styled from 'styled-components';
 export const Container = styled.ul`
   li {
 
-    position:relative;
+    
     list-style-type: none;
     padding: 1rem 2rem;
     border: 0;
     background: var(--shape);
     color: var(--text-body);
-    border-radius: 0.25rem;    
+    border-radius: 0.25rem; 
+
+    div.details {
+      max-height:0;
+      overflow:hidden;
+
+      &.show {
+        max-height:60rem;
+      }
+      transition: max-height 0.3s ease;
+      
+    }
 
     & + li {
       margin-top:2rem;
@@ -32,8 +43,28 @@ export const Container = styled.ul`
           gap: 0.3rem;
           img {
             
-            height: 0.8rem;
+            height: 1rem;
           }
+        }
+
+      }
+
+      .complaintTools{
+        gap:1rem;
+        img {
+          height:1.6rem;
+          filter: invert(0.4);
+
+          &:hover {
+            cursor: pointer;
+            filter: invert(0);
+          }
+
+          &.rotate{
+            transform: rotate(90deg);
+            
+          }
+          transition: transform 0.2s;
         }
 
       }

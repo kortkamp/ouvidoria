@@ -2,11 +2,14 @@
 import { useEffect, useState } from 'react';
 import PaginationCursor from '../PaginationCursor';
 import { api } from '../../services/api';
-import {Container , Answer} from './styles'
+import {Container , Answer} from './styles';
 
-import detailsImg from '../../assets/details.svg';
-import closeImg from '../../assets/close.svg'
-import calendarImg from '../../assets/calendar.svg'
+import { useAuth } from '../../hooks/useAuth';
+
+import detailsImg from '../../assets/down-arrow.svg';
+import closeImg from '../../assets/close.svg';
+import calendarImg from '../../assets/calendar.svg';
+import deleteImg from '../../assets/delete.svg';
 
 interface IAnswer {
   id:string;
@@ -41,6 +44,8 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
   const [totalPages, setTotalPages] = useState(1);
   const [complaintSelected, setComplaintSelected] = useState<string|undefined>('');
 
+  const {user} = useAuth();
+
   const paginationLimit = 3;
 
   useEffect(()=>{
@@ -62,7 +67,10 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
         {complaints.map((complaint)=>{
           const status = complaint.answers.length ? 'resolvida' : 'pendente';
           return(
-            <li key={complaint.id}>
+            <li 
+              key={complaint.id}
+              className={complaint.id === complaintSelected ? 'selected' : ''}
+            >
               <header>
                 <div className='complaintData'>
                   <span>{complaint.user.name}</span>
@@ -75,9 +83,11 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
                   <span className={status}>{status}</span>
                 </div>
                 <div className='complaintTools'>
+                  {user?.admin ? <img src={deleteImg} alt="apagar reclamação" /> : ''}
                   {complaint.id === complaintSelected? 
                     <img 
-                      src={closeImg} 
+                      className="rotate"
+                      src={detailsImg} 
                       alt="fechar" 
                       onClick={ ()=>handleOpenDetails('') }
                     />
@@ -93,47 +103,38 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
               <p>
                 {complaint.message}
               </p>
-              
-              {complaint.id === complaintSelected && complaint.image? 
-                <div className='imageArea'>
-                  <img src={complaint.image} alt="imagem da reclamação" />
-                </div>
-              : 
-                ''
-              }
 
-              {complaint.id === complaintSelected ? 
-                <Answer >
-                  
-                  {complaint.answers.map((answer)=>(
-                    <li key={answer.id}>
-                      
-                        <header>
-                          <strong>Resposta</strong> 
-                          <span> em {
-                            new Intl.DateTimeFormat('pt-BR').format(
-                              new Date(answer.created_at),
-                              )}
-                          </span>
-                        
-                        </header>
-                        
-                      
-                      <p>
-                        {answer.message}
-                      </p>
-                    </li>
-                  ))}
+              <div className={complaint.id === complaintSelected ? 'details show' : 'details'}>
+                {complaint.image? 
+                  <div className='imageArea'>
+                    <img src={complaint.image} alt="imagem da reclamação" />
+                  </div>
+                : 
+                  ''
+                }
+                  <Answer >
+                    {complaint.answers.map((answer)=>(
+                      <li key={answer.id}>
+                          <header>
+                            <strong>Resposta</strong> 
+                            <span> em {
+                              new Intl.DateTimeFormat('pt-BR').format(
+                                new Date(answer.created_at),
+                                )}
+                            </span>
+                          </header>
+                        <p>
+                          {answer.message}
+                        </p>
+                      </li>
+                    ))}
 
-                  {complaint.answers.length === 0 ?
-                    'Esta reclamação ainda não foi respondida'
-                    : ''
-                  }
-                </Answer> 
-              :
-                ''
-              }
-            
+                    {complaint.answers.length === 0 ?
+                      'Esta reclamação ainda não foi respondida'
+                      : ''
+                    }
+                  </Answer> 
+              </div>
             </li>
           )
           })}  
