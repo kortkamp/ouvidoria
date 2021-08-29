@@ -25,13 +25,15 @@ const Complaint = (): JSX.Element => {
 
   async function handleSubmit(event:FormEvent) {
     event.preventDefault();
-
     api.post('complaints', {
       district_id: districtId,
       message,
       image,
-      headers: { Authorization: `bearer ${user?.token}` }
-    }).then((response)=>{
+    },
+    {
+      headers: { Authorization: `Bearer ${user?.token}`
+    }})
+    .then((response)=>{
       console.log(response.data)
     });
 
@@ -44,7 +46,7 @@ const Complaint = (): JSX.Element => {
         
         <h2>Iniciar uma reclamação</h2>
        
-        <label htmlFor="district">Selecione um bairro:</label>
+        <label htmlFor="district">Bairro:</label>
         <select 
           name="district" 
           id="district" 
@@ -52,6 +54,7 @@ const Complaint = (): JSX.Element => {
           onChange={(event) => setDistrictId(event.target.value)} 
 
         >
+          <option value="" disabled hidden>Escolha um bairro</option>
           {districts.map((district)=>(
             <option key={district.id} value={district.id}>{district.name}</option>
           ))}
