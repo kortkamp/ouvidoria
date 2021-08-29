@@ -6,6 +6,7 @@ import {Container } from './styles';
 
 // import { useAuth } from '../../hooks/useAuth';
 import ComplaintItem from '../ComplaintItem';
+import { useAuth } from '../../hooks/useAuth';
 
 
 
@@ -40,6 +41,8 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
   const [complaints, setComplaints] = useState<IComplaint[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+
+  const {user} = useAuth();
   
   const [complaintSelected, setComplaintSelected] = useState<string|undefined>('');
 
@@ -54,6 +57,15 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
         setComplaints(loadedComplaints)});
   },[districtId,pageNumber]);
 
+  function handleDeleteComplaint(districtId:string) {
+    if(window.confirm("Deseja apagar esta reclamação?")){
+      api.delete(`/complaints/${districtId}`,
+      {headers: { Authorization: `bearer ${user?.token}` }})
+      .then((response) => {
+        window.location.reload();
+      })
+    }
+  }
   
   return(
     <>
@@ -65,6 +77,7 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
               complaint={complaint} 
               complaintSelected={complaintSelected} 
               setComplaintSelected={setComplaintSelected} 
+              handleDeleteComplaint={handleDeleteComplaint}
             />
           )
         })}  

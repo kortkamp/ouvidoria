@@ -34,12 +34,14 @@ interface IComplaintItemProps {
   complaint:IComplaint;
   complaintSelected: string|undefined;
   setComplaintSelected: (complaintId:string) => void;
+  handleDeleteComplaint: (complaintId:string) => void;
 }
 
 const ComplaintItem = ({
   complaint,
   complaintSelected,
-  setComplaintSelected
+  setComplaintSelected,
+  handleDeleteComplaint
 }:IComplaintItemProps): JSX.Element => {
 
   const {user} = useAuth();
@@ -49,6 +51,8 @@ const ComplaintItem = ({
   function handleOpenDetails(complaintId:string) {
     setComplaintSelected(complaintId);
   }
+
+  
 
 
   return (
@@ -69,7 +73,12 @@ const ComplaintItem = ({
         </div>
         <div className='complaintTools'>
           {user?.admin ? <img src={replyImg} alt="responder reclamação" /> : ''}
-          {user?.admin ? <img src={deleteImg} alt="apagar reclamação" /> : ''}
+          {user?.admin ? <img 
+            src={deleteImg} 
+            alt="apagar reclamação" 
+            onClick={()=>handleDeleteComplaint(complaint.id)}
+            /> 
+          : ''}
           {complaint.id === complaintSelected? 
             <img 
               className="rotate"
