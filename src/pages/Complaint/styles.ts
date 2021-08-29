@@ -33,3 +33,39 @@ export const Container = styled.form`
     font-size:1.2rem;
   }
 `;
+
+export const Sucess = styled.div`
+  max-width:var(--page-width);
+  margin: 0 auto;
+  padding: 7rem 0;
+
+  gap: 20px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+
+  button {
+
+    height:40px;
+    width: 100px;
+    border-radius: 4px;
+    border: 0;
+    background: var(--light-green);
+    
+    &:hover {
+      background: var(--green);
+    }
+    span {
+      font-size: 1rem;
+    }
+
+    img {
+      height: 1rem;
+      margin-right: 10px;
+    }
+  }
+
+
+`;
