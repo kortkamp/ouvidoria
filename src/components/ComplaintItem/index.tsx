@@ -5,6 +5,14 @@ import detailsImg from '../../assets/down-arrow.svg';
 import replyImg from '../../assets/reply.svg';
 import calendarImg from '../../assets/calendar.svg';
 import deleteImg from '../../assets/delete.svg';
+import AnswerForm from '../AnswerForm';
+import { api } from '../../services/api';
+import { useState } from 'react';
+
+interface ISubmitanswer {
+  complaint_id:string;
+  message:string;
+}
 
 interface IAnswer {
   id:string;
@@ -31,14 +39,14 @@ interface IComplaint {
 
 interface IComplaintItemProps {
   key:string;
-  complaint:IComplaint;
+  complaintData:IComplaint;
   complaintSelected: string|undefined;
   setComplaintSelected: (complaintId:string) => void;
   handleDeleteComplaint: (complaintId:string) => void;
 }
 
 const ComplaintItem = ({
-  complaint,
+  complaintData,
   complaintSelected,
   setComplaintSelected,
   handleDeleteComplaint
@@ -46,13 +54,42 @@ const ComplaintItem = ({
 
   const {user} = useAuth();
 
+  const [complaint, setComplaint] = useState<IComplaint>(complaintData);
+
+  const [writeAnswer, setWriteAnswer] = useState(false);
+
   const status = complaint.answers.length ? 'resolvida' : 'pendente';
 
   function handleOpenDetails(complaintId:string) {
     setComplaintSelected(complaintId);
   }
 
-  
+  function handleWriteAnswer(complaintId:string){
+    setComplaintSelected(complaintId);
+    setWriteAnswer( !writeAnswer );
+  }
+
+  function handleSubmitAnswer(answer:ISubmitanswer){
+    api.post('answers', {
+      complaint_id: answer.complaint_id,
+      message: answer.message,
+    },
+    {
+      headers: { Authorization: `Bearer ${user?.token}`
+    }})
+    .then((response)=>{
+      // build the new answer item
+      const newAnswer:IAnswer = {...response.data , user:{name:user?.name, admin:user?.admin}}
+
+      const updateComplaint = {...complaint};
+
+      updateComplaint.answers.push(newAnswer);
+
+      setComplaint(updateComplaint);
+      
+    });
+
+  }
 
 
   return (
@@ -72,7 +109,11 @@ const ComplaintItem = ({
           <span className={status}>{status}</span>
         </div>
         <div className='complaintTools'>
-          {user?.admin ? <img src={replyImg} alt="responder reclamação" /> : ''}
+          {user?.admin ? <img 
+            src={replyImg} 
+            alt="responder reclamação" 
+            onClick={()=>handleWriteAnswer(complaint.id)}
+            /> : ''}
           {user?.admin ? <img 
             src={deleteImg} 
             alt="apagar reclamação" 
@@ -101,14 +142,19 @@ const ComplaintItem = ({
       </p>
 
       <div className={complaint.id === complaintSelected ? 'details show' : 'details'}>
-        {complaint.image? 
+        {complaint.image && 
           <div className='imageArea'>
             <img src={complaint.image} alt="imagem da reclamação" />
           </div>
-        : 
-          ''
         }
           <Answer >
+            {complaint.answers.length === 0 &&
+              <li>
+                <span>
+                  Esta reclamação ainda não foi respondida
+                </span> 
+              </li>
+            }
             {complaint.answers.map((answer)=>(
               <li key={answer.id}>
                   <header>
@@ -123,13 +169,16 @@ const ComplaintItem = ({
                   {answer.message}
                 </p>
               </li>
-            ))}
-
-            {complaint.answers.length === 0 ?
-              'Esta reclamação ainda não foi respondida'
-              : ''
-            }
+            ))} 
           </Answer> 
+          
+          {user?.admin && 
+            <AnswerForm 
+              show={writeAnswer}
+              handleSubmitAnswer= {handleSubmitAnswer} 
+              complaintId={complaint.id}
+            />
+          }
 
       </div>
 

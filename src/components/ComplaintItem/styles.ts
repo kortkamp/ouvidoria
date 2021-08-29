@@ -11,6 +11,10 @@ export const Container = styled.li`
   div.details {
     max-height:0;
     overflow:hidden;
+    
+    ul {
+      margin: 16px 0;
+    }
 
     &.show {
       max-height:60rem;
@@ -100,13 +104,13 @@ export const Container = styled.li`
 
 export const Answer = styled.ul`
 
-  border: 1px solid rgb(120,120,120,0.5);
-  border-radius: 0.3rem;
-  background: #f8f9ff;
 
-  padding: 1rem;
-
-  li{
+li{
+    border: 1px solid rgb(120,120,120,0.5);
+    border-radius: 8px;
+    background: #f8f9ff;
+    
+    padding: 1rem;
 
     list-style-type: none;
     header {
