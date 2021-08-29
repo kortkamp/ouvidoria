@@ -60,7 +60,7 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
   function handleDeleteComplaint(districtId:string) {
     if(window.confirm("Deseja apagar esta reclamação?")){
       api.delete(`/complaints/${districtId}`,
-      {headers: { Authorization: `bearer ${user?.token}` }})
+      {headers: { Authorization: `Bearer ${user?.token}` }})
       .then((response) => {
         window.location.reload();
       })
@@ -74,7 +74,7 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
           return(
             <ComplaintItem 
               key={complaint.id}
-              complaint={complaint} 
+              complaintData={complaint} 
               complaintSelected={complaintSelected} 
               setComplaintSelected={setComplaintSelected} 
               handleDeleteComplaint={handleDeleteComplaint}
