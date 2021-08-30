@@ -45,7 +45,7 @@ const UserTooltip = (): JSX.Element => {
               <>
                 <button type='button' >Perfil</button>
                 <button type='button' onClick={()=> history.push('/complaint')}>Iniciar Reclamação</button>
-                <button type='button' onClick={()=>{Tooltip.hide();hideTooltip()}}>Minhas reclamações</button>
+                <button type='button' onClick={()=> history.push(`/user/${user.id}`)}>Minhas reclamações</button>
                 <button type='button' onClick={handleLogout}>Sair</button>
               </>
             : <>
