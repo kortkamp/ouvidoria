@@ -40,7 +40,7 @@ const District = (): JSX.Element => {
           <h2>Bairro {district?.name}</h2>
           <ComplaintButton />
         </div>
-        <ComplaintsList districtId={districtId}/>
+        <ComplaintsList sourceType='district' sourceId={districtId}/>
       </Container>
     </>
   )

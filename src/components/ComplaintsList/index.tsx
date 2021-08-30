@@ -34,28 +34,37 @@ interface IComplaint {
 }
 
 interface IComplaintsListProps {
-  districtId:string;
+  sourceType:'district'|'user';
+  sourceId:string;
 }
-const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
+const ComplaintsList = ({sourceType,sourceId}:IComplaintsListProps): JSX.Element => {
 
   const [complaints, setComplaints] = useState<IComplaint[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const {user} = useAuth();
+  const { user } = useAuth();
   
-  const [complaintSelected, setComplaintSelected] = useState<string|undefined>('');
-
   const paginationLimit = 4;
 
   useEffect(()=>{
-    api.get(`/complaints/district/${districtId}?page=${pageNumber}&limit=${paginationLimit}`)
-      .then((response) => {
+
+    if(!user){
+      return;
+    }
+
+    api.get(`/complaints/${sourceType}/${sourceId}?page=${pageNumber}&limit=${paginationLimit}`,
+      {
+        headers: { Authorization: `Bearer ${user.token}`
+      }
+    })
+    .then((response) => {
         const loadedComplaints = (response.data.complaints);
         const total = Math.ceil(response.data.total / paginationLimit);
         setTotalPages(total);
         setComplaints(loadedComplaints)});
-  },[districtId,pageNumber]);
+    
+  },[sourceType,sourceId,pageNumber,user]);
 
   function handleDeleteComplaint(districtId:string) {
     if(window.confirm("Deseja apagar esta reclamação?")){
@@ -75,8 +84,6 @@ const ComplaintsList = ({districtId}:IComplaintsListProps): JSX.Element => {
             <ComplaintItem 
               key={complaint.id}
               complaintData={complaint} 
-              complaintSelected={complaintSelected} 
-              setComplaintSelected={setComplaintSelected} 
               handleDeleteComplaint={handleDeleteComplaint}
             />
           )

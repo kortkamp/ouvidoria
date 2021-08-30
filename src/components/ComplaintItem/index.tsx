@@ -40,15 +40,13 @@ interface IComplaint {
 interface IComplaintItemProps {
   key:string;
   complaintData:IComplaint;
-  complaintSelected: string|undefined;
-  setComplaintSelected: (complaintId:string) => void;
+  
   handleDeleteComplaint: (complaintId:string) => void;
 }
 
 const ComplaintItem = ({
   complaintData,
-  complaintSelected,
-  setComplaintSelected,
+
   handleDeleteComplaint
 }:IComplaintItemProps): JSX.Element => {
 
@@ -56,16 +54,22 @@ const ComplaintItem = ({
 
   const [complaint, setComplaint] = useState<IComplaint>(complaintData);
 
+  const [complaintSelected, setComplaintSelected] = useState(false);
   const [writeAnswer, setWriteAnswer] = useState(false);
+
+
 
   const status = complaint.answers.length ? 'resolvida' : 'pendente';
 
-  function handleOpenDetails(complaintId:string) {
-    setComplaintSelected(complaintId);
+  function handleOpenDetails(select:boolean) {
+    if(!select){
+      setWriteAnswer(false);
+    }
+    setComplaintSelected(select);
   }
 
   function handleWriteAnswer(complaintId:string){
-    setComplaintSelected(complaintId);
+    setComplaintSelected(true);
     setWriteAnswer( !writeAnswer );
   }
 
@@ -95,7 +99,7 @@ const ComplaintItem = ({
   return (
     <Container
       key={complaint.id}
-      className={complaint.id === complaintSelected ? 'selected' : ''}
+      className={complaintSelected ? 'selected' : ''}
     >
       <header>
         <div className='complaintData'>
@@ -120,18 +124,18 @@ const ComplaintItem = ({
             onClick={()=>handleDeleteComplaint(complaint.id)}
             /> 
           : ''}
-          {complaint.id === complaintSelected? 
+          {complaintSelected? 
             <img 
               className="rotate"
               src={detailsImg} 
               alt="fechar" 
-              onClick={ ()=>handleOpenDetails('') }
+              onClick={ ()=>handleOpenDetails(false) }
             />
           : 
             <img 
               src={detailsImg} 
               alt="detalhes" 
-              onClick={ ()=>handleOpenDetails(complaint.id) }
+              onClick={ ()=>handleOpenDetails(true) }
             />
           }
         </div>
@@ -141,7 +145,7 @@ const ComplaintItem = ({
         {complaint.message}
       </p>
 
-      <div className={complaint.id === complaintSelected ? 'details show' : 'details'}>
+      <div className={complaintSelected ? 'details show' : 'details'}>
         {complaint.image && 
           <div className='imageArea'>
             <img src={complaint.image} alt="imagem da reclamação" />
