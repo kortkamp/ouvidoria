@@ -9,6 +9,7 @@ import { LoginModal } from '../components/LoginModal'
 
 
 interface IUser {
+  id:string;
   name: string;
   admin: boolean;
   token: string;
@@ -24,7 +25,7 @@ interface IAuthProviderProps {
 
 interface IAuthContextData {
   user: IUser|undefined;
-
+  loadStoredUser: () => IUser|undefined;
   authenticate: (login: ILoginData) => Promise<IAuthReturn>;
   logout: () => void;
   handleOpenLoginModal: () => void;
@@ -55,22 +56,27 @@ export function AuthProvider({ children }:IAuthProviderProps) {
 
   // load from storage----
   useEffect(() => {
-    const storagedUser = localStorage.getItem('@ouvidoria:user');
+    loadStoredUser();
+  }, []);
 
-    
-    if (storagedUser) {
+  function loadStoredUser():IUser|undefined{
+    const storedUser = localStorage.getItem('@ouvidoria:user');
+
+    if (storedUser) {
       try{
-        const decodedUser = decode(JSON.parse(storagedUser).token)
+        const decodedUser = decode(JSON.parse(storedUser))
         console.log(decodedUser)
-        setUser(JSON.parse(storagedUser));
+        setUser(JSON.parse(storedUser));
+        return(JSON.parse(storedUser));
       }catch(err){
         localStorage.removeItem('@ouvidoria:user');
       }
+      return(undefined)
     }
-
-  }, []);
+  }
 
   async function authenticate(loginInput:ILoginData) {
+
     try{
       const response = await api.post('/login', { ...loginInput });
       const userData = response.data;
@@ -89,12 +95,11 @@ export function AuthProvider({ children }:IAuthProviderProps) {
   async function logout(){
     setUser(undefined);
     localStorage.removeItem('@ouvidoria:user');
-    
     history.push('/');
   }
 
   return (
-    <AuthContext.Provider value={{ user, authenticate, logout, handleOpenLoginModal }}>
+    <AuthContext.Provider value={{ user, loadStoredUser, authenticate, logout, handleOpenLoginModal }}>
       <LoginModal
         isOpen={isLoginModalOpen}
         onRequestClose={handleCloseLoginModal}
