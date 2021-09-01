@@ -34,19 +34,23 @@ interface IComplaint {
     name:string;
     admin:boolean;
   }
+  districtData:{
+    id:string;
+    name:string;
+  }
   answers: IAnswer[];
 }
 
 interface IComplaintItemProps {
   key:string;
   complaintData:IComplaint;
-  
+  sourceType:'district'|'user';
   handleDeleteComplaint: (complaintId:string) => void;
 }
 
 const ComplaintItem = ({
   complaintData,
-
+  sourceType,
   handleDeleteComplaint
 }:IComplaintItemProps): JSX.Element => {
 
@@ -103,7 +107,11 @@ const ComplaintItem = ({
     >
       <header>
         <div className='complaintData'>
-          <span>{complaint.user.name}</span>
+          { sourceType==='user' ?
+            <span>Bairro {complaint.districtData.name}</span>
+          :
+            <span>{complaint.user.name}</span>
+          } 
           <span> <img src={calendarImg} alt="calendário" /> {
             new Intl.DateTimeFormat('pt-BR').format(
             new Date(complaint.created_at),

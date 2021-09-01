@@ -30,6 +30,10 @@ interface IComplaint {
     name:string;
     admin:boolean;
   }
+  districtData:{
+    id:string;
+    name:string;
+  }
   answers: IAnswer[];
 }
 
@@ -82,6 +86,7 @@ const ComplaintsList = ({sourceType,sourceId}:IComplaintsListProps): JSX.Element
         {complaints.map((complaint)=>{
           return(
             <ComplaintItem 
+              sourceType={sourceType}
               key={complaint.id}
               complaintData={complaint} 
               handleDeleteComplaint={handleDeleteComplaint}
