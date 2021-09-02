@@ -11,6 +11,7 @@ const DistrictList = (): JSX.Element => {
     id: number;
     name: string;
     custom_name:string;
+    image:string;
   }
 
   const [districts, setDistricts] = useState<IDistrict[]>([]);
@@ -26,16 +27,20 @@ const DistrictList = (): JSX.Element => {
 
   return(
     <Container>
-      <div>
-        <h2>Escolha um bairro para iniciar uma reclamação</h2>
-      </div>
+      
       <ul>
         {districts.map((district) => (
-          <li key={district.id} onClick={()=>{handleDistrictClick(district.id)}}>
-            <h3>{district.name}</h3>
-            <div>
-              <span>4 reclamaçoes abertas</span>
+          <li 
+            key={district.id} 
+            onClick={()=>{handleDistrictClick(district.id)}}
+          >
+            <div 
+              style={{ backgroundImage: `url(${district.image})` }}
+              className='child'  
+            >
+              
             </div>
+              <h3>{district.name}</h3>
           </li>
         ))}
       </ul>

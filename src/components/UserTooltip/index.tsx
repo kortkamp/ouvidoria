@@ -50,7 +50,7 @@ const UserTooltip = (): JSX.Element => {
               </>
             : <>
                 <button type='button' onClick={handleLogin}>Login</button>
-                <button type='button' >Cadastrar</button>
+                <button type='button' onClick={() => history.push('/register')}>Cadastrar</button>
               </>
             }
           </Tooltip>

@@ -15,4 +15,7 @@ export const Container = styled.div`
 
     
   }
+  img {
+    
+  }
 `;

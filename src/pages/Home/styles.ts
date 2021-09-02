@@ -1,7 +1,19 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  
   max-width:var(--page-width);
+
+  .pageTitle {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+
+  h2 {
+    text-align:center;
+    padding: 40px 0px;
+  }
   margin: 0 auto;
   padding: 2rem 0.5rem;
 
@@ -9,7 +21,5 @@ export const Container = styled.div`
   flex-direction:column;
   justify-content: center;
 
-  div {
-    margin: 2rem 2rem;
-  }
+ 
 `;

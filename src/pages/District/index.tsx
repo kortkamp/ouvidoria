@@ -14,6 +14,7 @@ type DistrictParams = {
 interface IDistrict {
   id:string;
   name: string;
+  image: string;
 }
 
 const District = (): JSX.Element => {
