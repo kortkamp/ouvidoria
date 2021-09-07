@@ -44,6 +44,7 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     //max-width: 52.5rem;
     width: 100%;
+    height:100%;
 
     margin: 0 auto;
   }
