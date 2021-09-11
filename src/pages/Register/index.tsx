@@ -1,7 +1,9 @@
 import { FormEvent, useState } from 'react';
 import Header from '../../components/Header';
 import backgroundImg from '../../assets/background.jpg'
+import { useAuth } from '../../hooks/useAuth';
 import {Container} from './styles';
+import { api } from '../../services/api';
 
 
 const Register = ():JSX.Element => {
@@ -11,10 +13,38 @@ const Register = ():JSX.Element => {
   const [password, setPassword] = useState('');
   const [confirmationPassword, setConfirmationPassword] = useState('');
   const [admin, setAdmin] = useState(false);
+  const [message, setMessage] = useState('');
+  const [submitSucess, setSubmitsucess] = useState(false);
+
+  const { user } = useAuth();
+
+  function validate(){
+    
+
+    return 'erro de teste';
+  }
 
   async function handleSubmit(event:FormEvent) {
     event.preventDefault();
-    
+
+    const validateError = validate();
+    if(validateError){
+      setMessage(validateError);
+      return;
+    }
+
+    api.post('users', {
+      name,
+      email,
+      admin,
+      password
+    },
+    {
+      headers: { Authorization: `Bearer ${user?.token}`
+    }})
+    .then((response)=>{
+      console.log(response);
+    });
 
   }
   return (
@@ -22,7 +52,10 @@ const Register = ():JSX.Element => {
       <Header />
       <Container style={{ backgroundImage: `url(${backgroundImg})` }}>
         <form onSubmit={handleSubmit}>
-          <h2>Cadastro</h2>
+          <h2>Cadastro de usuário</h2>
+          <div className='errorMessage'>
+            <span>{message}</span>
+          </div>
           <input 
             type="text" 
             name="name" 
@@ -56,18 +89,19 @@ const Register = ():JSX.Element => {
             value={confirmationPassword}
             onChange={(event) => setConfirmationPassword(event.target.value)} 
           />
-          <div>
-            
-            <input 
-              type="checkbox" 
-              name="admin" 
-              id="admin" 
-              checked={admin}
-              onChange={(event) => setAdmin(event.target.checked)} 
-            />
-            <span>Admin</span>
-          </div>
 
+          {user?.admin && 
+            <div>
+              <input 
+                type="checkbox" 
+                name="admin" 
+                id="admin" 
+                checked={admin}
+                onChange={(event) => setAdmin(event.target.checked)} 
+              />
+              <span>Admin</span>
+            </div>
+          }
           <button type="submit">Registrar</button>
         </form>
       </Container>

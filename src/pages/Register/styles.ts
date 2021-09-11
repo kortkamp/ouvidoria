@@ -16,7 +16,11 @@ export const Container = styled.div`
   padding: 3rem;
   border-radius: 0.25rem;
 
- 
+  .errorMessage {
+    span {
+      color:red;
+    }
+  }
 
   form {
 
@@ -36,7 +40,7 @@ export const Container = styled.div`
     h2 {
       color: var(--text-title);
       font-size: 1.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 0rem;
     }
     input {
       width: 100%;
@@ -73,6 +77,7 @@ export const Container = styled.div`
 
     & > div {
       
+      height: 3rem;
       display:flex;
       align-items:center;
       justify-content:flex-start;
