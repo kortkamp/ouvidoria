@@ -26,6 +26,7 @@ interface IComplaint {
   message:string;
   image:string;
   created_at:string;
+  solved:boolean|undefined;
   user:{
     name:string;
     admin:boolean;

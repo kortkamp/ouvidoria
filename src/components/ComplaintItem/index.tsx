@@ -8,6 +8,7 @@ import deleteImg from '../../assets/delete.svg';
 import AnswerForm from '../AnswerForm';
 import { api } from '../../services/api';
 import { useState } from 'react';
+import SolvedStatus from '../SolvedStatus';
 
 interface ISubmitanswer {
   complaint_id:string;
@@ -30,6 +31,7 @@ interface IComplaint {
   message:string;
   image:string;
   created_at:string;
+  solved:boolean|undefined;
   user:{
     name:string;
     admin:boolean;
@@ -159,38 +161,40 @@ const ComplaintItem = ({
             <img src={complaint.image} alt="imagem da reclamação" />
           </div>
         }
-          <Answer >
-            {complaint.answers.length === 0 &&
-              <li>
-                <span>
-                  Esta reclamação ainda não foi respondida
-                </span> 
-              </li>
-            }
-            {complaint.answers.map((answer)=>(
-              <li key={answer.id}>
-                  <header>
-                    <strong>Resposta</strong> 
-                    <span> em {
-                      new Intl.DateTimeFormat('pt-BR').format(
-                        new Date(answer.created_at),
-                        )}
-                    </span>
-                  </header>
-                <p>
-                  {answer.message}
-                </p>
-              </li>
-            ))} 
-          </Answer> 
-          
-          {user?.admin && 
-            <AnswerForm 
-              show={writeAnswer}
-              handleSubmitAnswer= {handleSubmitAnswer} 
-              complaintId={complaint.id}
-            />
+        <Answer >
+          {complaint.answers.length === 0 &&
+            <li>
+              <span>
+                Esta reclamação ainda não foi respondida
+              </span> 
+            </li>
           }
+          {complaint.answers.map((answer)=>(
+            <li key={answer.id}>
+                <header>
+                  <strong>Resposta</strong> 
+                  <span> em {
+                    new Intl.DateTimeFormat('pt-BR').format(
+                      new Date(answer.created_at),
+                      )}
+                  </span>
+                </header>
+              <p>
+                {answer.message}
+              </p>
+            </li>
+          ))} 
+        </Answer> 
+        
+        {user?.admin && 
+          <AnswerForm 
+            show={writeAnswer}
+            handleSubmitAnswer= {handleSubmitAnswer} 
+            complaintId={complaint.id}
+          />
+        }
+
+        <SolvedStatus status={complaint.solved} type={'edit'} />
 
       </div>
 
