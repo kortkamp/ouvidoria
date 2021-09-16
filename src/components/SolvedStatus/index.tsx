@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {Container, RadioBox } from './styles';
 
 
@@ -6,37 +5,43 @@ import likeImg from '../../assets/like.svg';
 import dislikeImg from '../../assets/dislike.svg';
 
 interface ISolvedStatusProps {
-  status: boolean|undefined;
+  solved: boolean|undefined;
   type: 'edit'|'view';
+  changeSolved:(solved:boolean)=>void;
 }
 
-const SolvedStatus = ({status, type}:ISolvedStatusProps):JSX.Element => {
-  const [solved, setSolved] = useState(status);
+const SolvedStatus = ({solved, type, changeSolved}:ISolvedStatusProps):JSX.Element => {
 
   async function handleClick(solvedStatus:boolean){
-    setSolved(solvedStatus);
+    changeSolved(solvedStatus);
   }
 
   return (
     <Container>
-      <RadioBox
-        type="button"
-        onClick={() => handleClick(true)}
-        isActive={solved === true}
-        activeColor="green"
-      >
-        <img src={likeImg} alt="Like" />
-        <span>Resolvido</span>
-      </RadioBox>
-      <RadioBox
-        type="button"
-        onClick={() => handleClick(false)}
-        isActive={solved === false}
-        activeColor="red"
-      >
-        <img src={dislikeImg} alt="Dislike" />
-        <span>Não Resolvido</span>
-      </RadioBox>
+      { type==='edit' ? 
+        <>
+          <RadioBox
+            type="button"
+            onClick={() => handleClick(true)}
+            isActive={solved === true}
+            activeColor="green"
+          >
+            <img src={likeImg} alt="Like" />
+            <span>Resolvido</span>
+          </RadioBox>
+          <RadioBox
+            type="button"
+            onClick={() => handleClick(false)}
+            isActive={solved === false}
+            activeColor="red"
+          >
+            <img src={dislikeImg} alt="Dislike" />
+            <span>Não Resolvido</span>
+          </RadioBox>
+        </>
+      :
+        <span>O usuário marcou esta reclamação como {!solved && 'não'} solucionada</span>
+      }
     </Container>
   )
 }

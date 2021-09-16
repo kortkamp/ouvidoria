@@ -66,11 +66,17 @@ export const Container = styled.li`
 
     }
 
-    .pendente {
-      color:red;
+    .pending {
+      color:#c3a611;
     }
-    .resolvida {
+    .answered {
+      color:#3c53d2;
+    }
+    .solved {
       color:green;
+    }
+    .unsolved {
+      color:red;
     }
   }
 

@@ -7,7 +7,7 @@ import calendarImg from '../../assets/calendar.svg';
 import deleteImg from '../../assets/delete.svg';
 import AnswerForm from '../AnswerForm';
 import { api } from '../../services/api';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SolvedStatus from '../SolvedStatus';
 
 interface ISubmitanswer {
@@ -33,6 +33,7 @@ interface IComplaint {
   created_at:string;
   solved:boolean|undefined;
   user:{
+    id:string;
     name:string;
     admin:boolean;
   }
@@ -50,6 +51,11 @@ interface IComplaintItemProps {
   handleDeleteComplaint: (complaintId:string) => void;
 }
 
+interface IStatus {
+  type:string;
+  message:string;
+}
+
 const ComplaintItem = ({
   complaintData,
   sourceType,
@@ -63,9 +69,40 @@ const ComplaintItem = ({
   const [complaintSelected, setComplaintSelected] = useState(false);
   const [writeAnswer, setWriteAnswer] = useState(false);
 
+  const [status, setStatus] = useState<IStatus>({type:'pending',message:'pendente'});
 
+  useEffect(()=>
+  {
+    let updatedStatus;
+    if(complaint.answers.length) {
+      updatedStatus = {type:'answered', message:'respondida'};
+      if(complaint.solved === true) {
+        updatedStatus = {type:'solved', message:'solucionada'};
+      }
+      if(complaint.solved === false) {
+        updatedStatus = {type:'unsolved', message:'não solucionada'};
+      }
+    } else {
+      updatedStatus = {type:'pending',message:'pendente'}
+    }
+    setStatus(updatedStatus);
+    
+  },[complaint]);
 
-  const status = complaint.answers.length ? 'resolvida' : 'pendente';
+  function changeSolved(solved:boolean){
+    api.put(`complaints/${complaint.id}`, {
+      solved
+    },
+    {
+      headers: { Authorization: `Bearer ${user?.token}`
+    }})
+    .then((response)=>{
+      const updatedComplaint = {...complaint};
+      updatedComplaint.solved = solved;
+      setComplaint(updatedComplaint);
+    });
+  }
+  
 
   function handleOpenDetails(select:boolean) {
     if(!select){
@@ -120,7 +157,7 @@ const ComplaintItem = ({
           )}
           </span>
           <span><b>ID:</b> {complaint.id}</span>
-          <span className={status}>{status}</span>
+          <span className={status.type}>{status.message}</span>
         </div>
         <div className='complaintTools'>
           {user?.admin ? <img 
@@ -194,8 +231,13 @@ const ComplaintItem = ({
           />
         }
 
-        <SolvedStatus status={complaint.solved} type={'edit'} />
-
+        {complaint.answers.length > 0 && 
+          <SolvedStatus 
+            solved={complaint.solved} 
+            type={user?.id===complaint.user.id ? 'edit' : 'view'} 
+            changeSolved={changeSolved}
+          />
+        }
       </div>
 
     </Container>

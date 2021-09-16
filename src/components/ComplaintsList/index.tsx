@@ -28,6 +28,7 @@ interface IComplaint {
   created_at:string;
   solved:boolean|undefined;
   user:{
+    id:string;
     name:string;
     admin:boolean;
   }
