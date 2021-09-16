@@ -75,9 +75,12 @@ const ComplaintsList = ({sourceType,sourceId}:IComplaintsListProps): JSX.Element
   function handleDeleteComplaint(districtId:string) {
     if(window.confirm("Deseja apagar esta reclamação?")){
       api.delete(`/complaints/${districtId}`,
-      {headers: { Authorization: `Bearer ${user?.token}` }})
+        {
+          headers: { Authorization: `Bearer ${user?.token}` 
+        }
+      })
       .then((response) => {
-        window.location.reload();
+          window.location.reload();
       })
     }
   }
