@@ -12,8 +12,10 @@ interface ISolvedStatusProps {
 
 const SolvedStatus = ({solved, type, changeSolved}:ISolvedStatusProps):JSX.Element => {
 
-  async function handleClick(solvedStatus:boolean){
-    changeSolved(solvedStatus);
+  async function handleClick(newSolvedStatus:boolean){
+    if(newSolvedStatus !== solved){
+      changeSolved(newSolvedStatus);
+    }
   }
 
   return (

@@ -29,14 +29,18 @@ export const RadioBox = styled.button<IRadioBoxProps>`
   background: ${(props) => (props.isActive
     ? transparentize(0.9, colors[props.activeColor])
     : 'transparent')
-};
+  };
   
+
+ 
   display: flex;
   align-items: center;
   justify-content: center;
   transition: border-color 0.2s;
   &:hover {
-    border-color: ${darken(0.1, '#d7d7d7')}
+    border-color: ${darken(0.1, '#d7d7d7')};
+    background: ${(props) => transparentize(0.95, colors[props.activeColor])
+  };
   }
   img {
     height: 30px;
@@ -48,4 +52,5 @@ export const RadioBox = styled.button<IRadioBoxProps>`
     font-size: 1rem;
     color: var(--text-tittle);
   }
+
 `;
