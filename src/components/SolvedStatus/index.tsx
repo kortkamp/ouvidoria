@@ -1,6 +1,5 @@
 import {Container, RadioBox } from './styles';
 
-
 import likeImg from '../../assets/like.svg';
 import dislikeImg from '../../assets/dislike.svg';
 
@@ -20,13 +19,16 @@ const SolvedStatus = ({solved, type, changeSolved}:ISolvedStatusProps):JSX.Eleme
 
   return (
     <Container>
-      { type==='edit' ? 
+      
+      { (solved === true || solved === false || type==='edit') ? 
         <>
           <RadioBox
             type="button"
             onClick={() => handleClick(true)}
             isActive={solved === true}
             activeColor="green"
+            
+            className={solved === false ? 'hidden' : '' }
           >
             <img src={likeImg} alt="Like" />
             <span>Resolvido</span>
@@ -36,13 +38,15 @@ const SolvedStatus = ({solved, type, changeSolved}:ISolvedStatusProps):JSX.Eleme
             onClick={() => handleClick(false)}
             isActive={solved === false}
             activeColor="red"
+            
+            className={solved === true ? 'hidden' : '' }
           >
             <img src={dislikeImg} alt="Dislike" />
             <span>Não Resolvido</span>
           </RadioBox>
         </>
       :
-        <span>O usuário marcou esta reclamação como {!solved && 'não'} solucionada</span>
+        <span>O usuário ainda não deu sua consideração final</span>
       }
     </Container>
   )
