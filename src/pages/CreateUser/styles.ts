@@ -22,7 +22,7 @@ export const Container = styled.div`
     }
   }
 
-  form {
+  form , & > div {
 
     padding: 30px;
     width: 600px;
@@ -41,6 +41,7 @@ export const Container = styled.div`
       color: var(--text-title);
       font-size: 1.5rem;
       margin-bottom: 0rem;
+      align-self:center;
     }
     input {
       width: 100%;
@@ -58,7 +59,7 @@ export const Container = styled.div`
         margin-top: 1rem;
       }
     }
-    button[type="submit"] {
+    button {
       width: 100%;
       padding: 0 1.5rem;
       height: 3rem;
