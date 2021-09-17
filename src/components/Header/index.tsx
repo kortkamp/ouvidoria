@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 import megaphoneImg from '../../assets/megaphone.svg'
 
 import UserTooltip from '../UserTooltip';
+import SearchBar from '../SearchBar';
 
 const Header = (): JSX.Element => {
   const history = useHistory();
@@ -17,7 +18,11 @@ const Header = (): JSX.Element => {
           <span>Sistema de Ouvidoria</span>
         </TitleArea>
 
-        <UserTooltip />
+        <div>
+          <SearchBar />
+          <UserTooltip />
+
+        </div>
       </div>
     </Container>
   );
