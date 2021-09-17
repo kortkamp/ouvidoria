@@ -10,6 +10,7 @@ export const Container = styled.form`
   justify-content:center;
   align-items:stretch;
   flex-direction:column;
+  max-width: 576px;
   
   gap:1rem;
 
@@ -18,7 +19,7 @@ export const Container = styled.form`
     text-align:center;
   }
   input , textarea, select, label, button{
-    margin: 0 3rem;
+    
     padding:0.7rem;
     font-size:1rem;
     border-radius:0.3rem;
@@ -26,12 +27,22 @@ export const Container = styled.form`
   }
 
 
-  button[type=submit] {
-    background: var(--green);
-    width:13rem;
-    align-self: flex-end;
-    font-size:1.2rem;
-  }
+  button {
+      width: 100%;
+      padding: 0 1.5rem;
+      height: 3rem;
+      background: var(--light-red);
+      color: #fff;
+      border-radius: 0.25rem;
+      border: 0;
+      font-size: 1rem;
+      margin-top: 1.5rem;
+      font-weight: 600;
+      transition: filter 0.2s;
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
 `;
 
 export const Sucess = styled.div`
