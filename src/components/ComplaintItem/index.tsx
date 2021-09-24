@@ -15,7 +15,7 @@ interface ISubmitanswer {
   message:string;
 }
 
-interface IAnswer {
+export interface IAnswer {
   id:string;
   message:string;
   deadline:number;
@@ -26,7 +26,7 @@ interface IAnswer {
   }
 }
 
-interface IComplaint {
+export interface IComplaint {
   id:string;
   message:string;
   image:string;

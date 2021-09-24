@@ -5,39 +5,9 @@ import { api } from '../../services/api';
 import {Container } from './styles';
 
 // import { useAuth } from '../../hooks/useAuth';
-import ComplaintItem from '../ComplaintItem';
+import ComplaintItem, { IComplaint, IAnswer } from '../ComplaintItem';
 import { useAuth } from '../../hooks/useAuth';
 
-
-
-interface IAnswer {
-  id:string;
-  message:string;
-  deadline:number;
-  created_at:string;
-  user:{
-    name:string;
-    admin:boolean;
-  }
-}
-
-interface IComplaint {
-  id:string;
-  message:string;
-  image:string;
-  created_at:string;
-  solved:boolean|undefined;
-  user:{
-    id:string;
-    name:string;
-    admin:boolean;
-  }
-  districtData:{
-    id:string;
-    name:string;
-  }
-  answers: IAnswer[];
-}
 
 interface IComplaintsListProps {
   sourceType:'district'|'user';
