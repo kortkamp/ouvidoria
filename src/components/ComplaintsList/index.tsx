@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import PaginationCursor from '../PaginationCursor';
-import { api } from '../../services/api';
+import { api,getComplaints } from '../../services/api';
 import {Container } from './styles';
 
 // import { useAuth } from '../../hooks/useAuth';
@@ -10,7 +10,7 @@ import { useAuth } from '../../hooks/useAuth';
 
 
 interface IComplaintsListProps {
-  sourceType:'district'|'user';
+  sourceType:'district'|'user'|'search';
   sourceId:string;
 }
 const ComplaintsList = ({sourceType,sourceId}:IComplaintsListProps): JSX.Element => {
@@ -28,17 +28,13 @@ const ComplaintsList = ({sourceType,sourceId}:IComplaintsListProps): JSX.Element
     if(!user){
       return;
     }
-
-    api.get(`/complaints/${sourceType}/${sourceId}?page=${pageNumber}&limit=${paginationLimit}`,
-      {
-        headers: { Authorization: `Bearer ${user.token}`
-      }
-    })
+    getComplaints({sourceType,sourceId,token: user.token, pageNumber,paginationLimit})
     .then((response) => {
-        const loadedComplaints = (response.data.complaints);
-        const total = Math.ceil(response.data.total / paginationLimit);
-        setTotalPages(total);
-        setComplaints(loadedComplaints)});
+        if(response){
+          setTotalPages(response.total);
+          setComplaints(response?.complaints)
+        }
+    });
     
   },[sourceType,sourceId,pageNumber,user]);
 
